@@ -36,4 +36,17 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
+    @PutMapping("/products/{id}/stock/remove")
+    public Product removeStock(
+            @PathVariable Long id,
+            @RequestParam int quantity) {
+        return productService.removeStock(id,quantity);
+    }
+
+    @PutMapping("/products/{id}/stock/add")
+    public Product addStock(
+            @PathVariable Long id,
+            @RequestParam int quantity) {
+        return productService.addStock(id,quantity);
+    }
 }

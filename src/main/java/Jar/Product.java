@@ -10,7 +10,6 @@ import jakarta.persistence.*; // DBと連携するための機能をまとめて
         @Id // 「このフィールドが主キー（レコードを一意に識別するもの）です」
         @GeneratedValue(strategy = GenerationType.IDENTITY) // idは1,2,3...と自動で連番にする
         private Long id;
-
         private String name;  // 商品名
         private int stock;    // 在庫数
 

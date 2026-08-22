@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>商品詳細</title>
+</head>
+<body>
+
+<h1 id="product-name"></h1>
+<p id="product-stock"></p>
+<h2>入出庫履歴</h2>
+<div id="history-list"></div>
+<input id="quantity" type="number" min="1" step="1">
+<button id="add-button">入庫</button>
+<button id="remove-button">出庫</button>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    console.log(id);
+
+    fetch("/products/" + id)
+        .then(response => response.json())
+        .then(product => {
+            const productName = document.getElementById("product-name");
+            const productStock = document.getElementById("product-stock");
+
+            productName.textContent = product.name;
+            productStock.textContent = "在庫：" + product.stock;
+        });
+
+function loadHistory() {
+    fetch("/product/" + id + "/history")
+        .then(response => response.json())
+        .then(histories => {
+            const historyList = document.getElementById("history-list");
+
+            historyList.innerHTML = "";
+
+            histories.forEach(history => {
+                const item = document.createElement("p");
+
+                item.textContent =
+                    history.type + " " +
+                    history.quantity + " " +
+                    history.createdAt;
+
+                historyList.appendChild(item);
+            });
+        });
+}
+loadHistory();
+
+const quantityInput = document.getElementById("quantity");
+const addButton = document.getElementById("add-button");
+const removeButton = document.getElementById("remove-button");
+
+addButton.addEventListener("click", () => {
+    const quantity = quantityInput.valueAsNumber;
+
+    fetch("/products/" + id + "/stock/add?quantity=" + quantity, {
+        method: "PUT"
+    })
+        .then(response => response.json())
+        .then(product => {
+            const productStock = document.getElementById("product-stock");
+            productStock.textContent = "在庫：" + product.stock;
+
+            loadHistory();
+        });
+});
+    
+    removeButton.addEventListener("click", () => {
+    const quantity = quantityInput.valueAsNumber;
+
+    fetch("/products/" + id + "/stock/remove?quantity=" + quantity, {
+        method: "PUT"
+    })
+        .then(response => response.json())
+        .then(product => {
+            const productStock = document.getElementById("product-stock");
+            productStock.textContent = "在庫：" + product.stock;
+
+            loadHistory();
+        });
+});
+
+
+</script>
+
+</body>
+</html>

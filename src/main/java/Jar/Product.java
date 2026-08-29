@@ -12,6 +12,7 @@ import jakarta.persistence.*; // DBと連携するための機能をまとめて
         private Long id;
         private String name;  // 商品名
         private int stock;    // 在庫数
+        private String category;
 
         // 以下はgetter/setter（フィールドの値を取得・セットするメソッド）
         // Javaではフィールドをprivateにして外からは必ずこれ経由でアクセスする
@@ -24,5 +25,8 @@ import jakarta.persistence.*; // DBと連携するための機能をまとめて
 
         public int getStock() { return stock; }
         public void setStock(int stock) { this.stock = stock; }
+
+        public String getCategory() { return category; }
+        public void setCategory(String category) { this.category = category; }
 
     }

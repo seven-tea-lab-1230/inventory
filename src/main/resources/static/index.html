@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <title>在庫管理</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<h2>商品登録</h2>
+
+<input id="product-name" type="text" placeholder="商品名">
+
+<select id="product-category">
+    <option value="">カテゴリを選択</option>
+    <option value="TSHIRT">Tシャツ</option>
+    <option value="TOWEL">タオル</option>
+    <option value="STICKER">ステッカー</option>
+    <option value="RUBBER_BAND">ラバーバンド</option>
+    <option value="ACCESSORY">小物・雑貨</option>
+    <option value="MEDIA">CD・音源</option>
+    <option value="OTHER">その他</option>
+</select>
+
+<button id="create-button">登録</button>
+
+<p id="message"></p>
+
 <h1>商品一覧</h1>
 
 <div id="product-list"></div>
 
-<script>
-    fetch("/products")
-        .then(response => response.json())
-        .then(products => {
-            const productList = document.getElementById("product-list");
+<script src="/index.js"> </script>
 
-            products.forEach(product => {
-                const item = document.createElement("a");
-                item.textContent = product.name + "　在庫：" + product.stock;
-                item.href = "/product.html?id=" + product.id;
-                productList.appendChild(item);
-            });
-        });
-</script>
 </body>
 </html>

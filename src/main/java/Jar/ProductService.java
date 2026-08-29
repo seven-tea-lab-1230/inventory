@@ -40,7 +40,7 @@ public class ProductService {
     public Product updateProduct(Long id,Product updatedProduct){
         Product product = productRepository.findById(id).orElseThrow();
         product.setName(updatedProduct.getName());
-        product.setStock(updatedProduct.getStock());
+        product.setCategory(updatedProduct.getCategory());
         return  productRepository.save(product);
     }
 
